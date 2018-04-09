@@ -452,7 +452,7 @@ def load_cross(batch_size, n_labelled=None):
 
             temp_tr_x = np.concatenate([np.array(train_brain), x_tr], 0)
             temp_tr_y = np.concatenate([np.array(train_label), y_tr], 0)
-
+            break
         else:
             i += 1
 
