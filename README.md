@@ -5,6 +5,8 @@ This is a Tensorflow implementation of my paper:
 
 Peiye Zhuang, Alexander Schwing, and Sanmi Koyejo
 
+![Results](https://github.com/KelestZ/ICW-GANs/blob/master/misc/generated.png)
+
 ## Prerequisites
 
 - Tensorflow 1.x
@@ -13,6 +15,12 @@ Peiye Zhuang, Alexander Schwing, and Sanmi Koyejo
 - Scipy 1.1.0, Nilearn
 
 ## Data
-We used a public dataset [BrainPedia 1952](https://neurovault.org/collections/1952/). You may either download the dataset by yourself or use our preprocessed data 
 
-## Setup
+We used a public dataset [BrainPedia 1952](https://neurovault.org/collections/1952/). You may either download the dataset by yourself or use our [preprocessed data](https://drive.google.com/open?id=1nLHZsWR9XFBDIZOob5e_kHq3HV5B_37q) on GoogleDrive.
+
+## Training & testing
+
+```
+ python icw_gans.py
+```
+You may change default parameter settings in the argparse. We did not write an independent python file for testing. Instead, we used the function `save_test_img` in the code to save test images after amount of training epochs.
