@@ -34,7 +34,7 @@ def flush(cost_dir):
 
 		plt.clf()
 		plt.plot(x_vals, y_vals)
-		plt.xlabel('iteration')
+		plt.xlabel('Iteration')
 		temp = name.split('/')[-1]
 		plt.ylabel(temp)
 

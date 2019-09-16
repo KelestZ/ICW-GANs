@@ -285,11 +285,11 @@ def main(_):
   '''
   #data = pre_class_statics2()
   train = load_ckpt_data()#load_ckpt_data()#pre_class_statics(None)
-  input_img = tf.placeholder(tf.float32, shape=[26, 31, 23])#[26, 31, 23])#tf.placeholder(tf.string)
+  input_img = tf.compat.v1.placeholder(tf.float32, shape=[26, 31, 23])#[26, 31, 23])#tf.placeholder(tf.string)
   decoded_image = tf.expand_dims(input_img, 0)
 
   print('Start cal')
-  with tf.Session() as sess:
+  with tf.compat.v1.Session() as sess:
       ms_score={}
       ct = 0
       for tag in train.keys():
@@ -319,4 +319,4 @@ def main(_):
 
 
 if __name__ == '__main__':
-  tf.app.run()
+  tf.compat.v1.app.run()

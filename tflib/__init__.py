@@ -3,7 +3,7 @@ import tensorflow as tf
 
 import locale
 
-locale.setlocale(locale.LC_ALL, '')
+# locale.setlocale(locale.LC_ALL, '')
 
 _params = {}
 _param_aliases = {}

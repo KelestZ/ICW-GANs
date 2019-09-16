@@ -24,7 +24,7 @@ def unset_weights_stdev():
 
 def Deconv(name, input_dim, output_shape, inputs, stride = 2,he_init=True,
            weightnorm=None, biases=True, gain=1., mask_type=None):
-    with tf.name_scope(name) as scope:
+    with tf.compat.v1.name_scope(name) as scope:
         output_dim = output_shape[-1]
         if output_dim is None:
             output_dim = input_dim / 2
@@ -71,18 +71,18 @@ def Deconv(name, input_dim, output_shape, inputs, stride = 2,he_init=True,
                 name + '.g',
                 norm_values
             )
-            with tf.name_scope('weightnorm') as scope:
-                norms = tf.sqrt(tf.reduce_sum(tf.square(filters), reduction_indices=[0,1,2,3]))
+            with tf.compat.v1.name_scope('weightnorm') as scope:
+                norms = tf.sqrt(tf.reduce_sum(input_tensor=tf.square(filters), axis=[0,1,2,3]))
                 filters = filters * (target_norms / norms)
 
-        result = tf.nn.conv3d_transpose(value=inputs,
+        result = tf.nn.conv3d_transpose(inputs,
                                         filter=filters,
                                         output_shape=output_shape,
                                         strides=[1, 2, 2, 2, 1],
                                         padding='SAME',
                                         name=name,
                                         data_format="NDHWC"
-                                        )#
+                                        )
         # data_format="NDHWC"
         '''
         if biases:
@@ -96,7 +96,7 @@ def Deconv(name, input_dim, output_shape, inputs, stride = 2,he_init=True,
 
 
 def Conv3D(name, input_dim, output_dim, inputs, he_init=True, mask_type=None, stride=1, weightnorm=None, biases=True): #filter_size,
-    with tf.name_scope(name) as scope:
+    with tf.compat.v1.name_scope(name) as scope:
         if input_dim is None:
             input_dim = output_dim / 2
 
@@ -136,12 +136,12 @@ def Conv3D(name, input_dim, output_dim, inputs, he_init=True, mask_type=None, st
                 name + '.g',
                 norm_values
             )
-            with tf.name_scope('weightnorm') as scope:
-                norms = tf.sqrt(tf.reduce_sum(tf.square(filters), reduction_indices=[0,1,2,3]))
+            with tf.compat.v1.name_scope('weightnorm') as scope:
+                norms = tf.sqrt(tf.reduce_sum(input_tensor=tf.square(filters), axis=[0,1,2,3]))
                 filters = filters * (target_norms / norms)
 
         result = tf.nn.conv3d(input=inputs,
-                              filter=filters,
+                              filters=filters,
                               strides=[1, stride, stride, stride, 1],
                               padding="SAME",
                               name=name)
@@ -160,7 +160,7 @@ def Conv3D(name, input_dim, output_dim, inputs, he_init=True, mask_type=None, st
 def Conv3D_layer(name, input_dim, output_dim, inputs, he_init=True, mask_type=None, stride=1, weightnorm=None, biases=True):
 
 
-   layer =  tf.layers.conv3d(inputs,
+   layer =  tf.compat.v1.layers.conv3d(inputs,
                              filters = [4,4,4,input_dim,output_dim],
                              kernel_size=[4,4,4],
                              strides=(2, 2, 2),
@@ -170,7 +170,7 @@ def Conv3D_layer(name, input_dim, output_dim, inputs, he_init=True, mask_type=No
                              activation=None,
                              use_bias=True,
                              kernel_initializer=None,
-                             bias_initializer=tf.zeros_initializer(),
+                             bias_initializer=tf.compat.v1.zeros_initializer(),
                              kernel_regularizer=True,
                              bias_regularizer=None,
                              activity_regularizer=None,

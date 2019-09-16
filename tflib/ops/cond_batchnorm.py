@@ -7,11 +7,11 @@ def Batchnorm(name, axes, inputs, is_training=None, stats_iter=None, update_movi
     """conditional batchnorm (dumoulin et al 2016) for BCHW conv filtermaps"""
     if axes != [0,2,3]:
         raise Exception('unsupported')
-    mean, var = tf.nn.moments(inputs, axes, keep_dims=True)
+    mean, var = tf.nn.moments(x=inputs, axes=axes, keepdims=True)
     shape = mean.get_shape().as_list() # shape is [1,n,1,1]
     offset_m = lib.param(name+'.offset', np.zeros([n_labels,shape[1]], dtype='float32'))
     scale_m = lib.param(name+'.scale', np.ones([n_labels,shape[1]], dtype='float32'))
-    offset = tf.nn.embedding_lookup(offset_m, labels)
-    scale = tf.nn.embedding_lookup(scale_m, labels)
+    offset = tf.nn.embedding_lookup(params=offset_m, ids=labels)
+    scale = tf.nn.embedding_lookup(params=scale_m, ids=labels)
     result = tf.nn.batch_normalization(inputs, mean, var, offset[:,:,None,None], scale[:,:,None,None], 1e-5)
     return result

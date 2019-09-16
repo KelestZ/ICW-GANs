@@ -28,14 +28,12 @@ def upsample_vectorized(vecdata):
 
     # get mask
     inmask, smallmasker ,affine = down_mask(4.0)
-
     outshape = tuple([13 ,15 ,11])
     # realscale = float(inmask.shape[0]) / float(outshape[0])
-
     img = nibabel.Nifti1Image(vecdata, affine)
+
     #print(new_affine,affine)
     temp_vec = resample_img(img, target_affine=affine, target_shape=outshape, interpolation='continuous')
-
     # Upsample to brain space
     braindata = upsample_voxels(inmask, temp_vec)
 

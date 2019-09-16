@@ -34,7 +34,7 @@ def Linear(
     """
     initialization: None, `lecun`, 'glorot', `he`, 'glorot_he', `orthogonal`, `("uniform", range)`
     """
-    with tf.name_scope(name) as scope:
+    with tf.compat.v1.name_scope(name) as scope:
 
         def uniform(stdev, size):
             if _weights_stdev is not None:
@@ -121,8 +121,8 @@ def Linear(
                 norm_values
             )
 
-            with tf.name_scope('weightnorm') as scope:
-                norms = tf.sqrt(tf.reduce_sum(tf.square(weight), reduction_indices=[0]))
+            with tf.compat.v1.name_scope('weightnorm') as scope:
+                norms = tf.sqrt(tf.reduce_sum(input_tensor=tf.square(weight), axis=[0]))
                 weight = weight * (target_norms / norms)
 
         # if 'Discriminator' in name:
@@ -135,7 +135,7 @@ def Linear(
         else:
             reshaped_inputs = tf.reshape(inputs, [-1, input_dim])
             result = tf.matmul(reshaped_inputs, weight)
-            result = tf.reshape(result, tf.pack(tf.unpack(tf.shape(inputs))[:-1] + [output_dim]))
+            result = tf.reshape(result, tf.pack(tf.unpack(tf.shape(input=inputs))[:-1] + [output_dim]))
 
         if biases:
             result = tf.nn.bias_add(

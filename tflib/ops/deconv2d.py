@@ -21,7 +21,6 @@ def Deconv2D(
     name, 
     input_dim,
     output_shape,
-    filter_size, 
     inputs, 
     he_init=True,
     weightnorm=None,
@@ -33,11 +32,9 @@ def Deconv2D(
     inputs: tensor of shape (batch size, height, width, input_dim)
     returns: tensor of shape (batch size, 2*height, 2*width, output_dim)
     """
+    filter_size = [3, 3]
     output_dim = output_shape[-1]
-    with tf.name_scope(name) as scope:
-
-        if mask_type != None:
-            raise Exception('Unsupported configuration')
+    with tf.compat.v1.name_scope(name) as scope:
 
         def uniform(stdev, size):
             return np.random.uniform(
@@ -55,25 +52,15 @@ def Deconv2D(
         else: # Normalized init (Glorot & Bengio)
             filters_stdev = np.sqrt(2./(fan_in+fan_out))
 
-
-        if _weights_stdev is not None:
-            filter_values = uniform(
-                _weights_stdev,
-                (filter_size[0], filter_size[1], output_dim, input_dim)
-            )
-        else:
-            filter_values = uniform(
-                filters_stdev,
-                (filter_size[0], filter_size[1], output_dim, input_dim)
-            )
-
-        filter_values *= gain
+        filter_values = uniform(
+            filters_stdev,
+            (filter_size[0], filter_size[1], output_dim, input_dim))
 
         filters = lib.param(
             name+'.Filters',
             filter_values
         )
-
+        '''
         if weightnorm==None:
             weightnorm = _default_weightnorm
         if weightnorm:
@@ -87,8 +74,7 @@ def Deconv2D(
                 norms = tf.sqrt(tf.reduce_sum(tf.square(filters), reduction_indices=[0,1,3]))
                 filters = filters * tf.expand_dims(target_norms / norms, 1)
 
-
-        inputs = tf.transpose(inputs, [0,2,3,1], name='NCHW_to_NHWC')
+        '''
         '''
         input_shape = tf.shape(inputs)
         
@@ -96,12 +82,14 @@ def Deconv2D(
             output_shape = tf.pack([input_shape[0], 1*input_shape[1], 2*input_shape[2], output_dim])
         except Exception as e:
             output_shape = tf.stack([input_shape[0], 1*input_shape[1], 2*input_shape[2], output_dim])
+        
         '''
 
+        # inputs = tf.transpose(inputs, [0,2,3,1], name='NCHW_to_NHWC')
 
         result = tf.nn.conv2d_transpose(
-            value=inputs, 
-            filter=filters,
+            input=inputs, 
+            filters=filters,
             output_shape=output_shape, 
             strides=[1, 2, 2, 1],
             padding='SAME'
@@ -110,11 +98,10 @@ def Deconv2D(
         if biases:
             _biases = lib.param(
                 name+'.Biases',
-                np.zeros(output_dim, dtype='float32')
-            )
+                np.zeros(output_dim, dtype='float32'))
             result = tf.nn.bias_add(result, _biases)
 
-        result = tf.transpose(result, [0,3,1,2], name='NHWC_to_NCHW')
+        # result = tf.transpose(result, [0,3,1,2], name='NHWC_to_NCHW')
 
 
         return result
