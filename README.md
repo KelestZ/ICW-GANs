@@ -18,6 +18,10 @@ Peiye Zhuang, Alexander Schwing, and Sanmi Koyejo
 
 We used a public dataset [BrainPedia 1952](https://neurovault.org/collections/1952/). You may either download the dataset by yourself or use our [preprocessed data](https://drive.google.com/open?id=1nLHZsWR9XFBDIZOob5e_kHq3HV5B_37q) on GoogleDrive.
 
+## Pretrained models
+
+You may download our pretrained model:[checkpoint](https://drive.google.com/open?id=1nLHZsWR9XFBDIZOob5e_kHq3HV5B_37q).
+
 ## Training & testing
 
 ```
