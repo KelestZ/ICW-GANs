@@ -20,7 +20,7 @@ We used a public dataset [BrainPedia 1952](https://neurovault.org/collections/19
 
 ## Pretrained models
 
-You may download our pretrained model [checkpoint](https://drive.google.com/open?id=1nLHZsWR9XFBDIZOob5e_kHq3HV5B_37q) on GoogleDrive.
+You may download our pretrained model [checkpoint](https://drive.google.com/open?id=1QTj8IOP3kw694k3gSo_HWTfScTafgO05) on GoogleDrive.
 
 ## Training & testing
 
