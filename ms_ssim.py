@@ -181,9 +181,9 @@ def MultiScaleSSIM(img1, img2, max_val=255, filter_size=11, filter_sigma=1.5,
 
 
 def pre_class_statics(data):
-    data_dir = '/home/nfs/zpy/BrainPedia/pkl/'
+    data_dir = './data/'
     if data is None:
-        data_pkl = 'outbraindata_4.0_p2.pkl'
+        data_pkl = ""
         f_data = open(data_dir + data_pkl, 'rb')
         data = pkl.load(f_data)
         f_data.close()
@@ -192,7 +192,7 @@ def pre_class_statics(data):
     f_tags = open(data_dir + tag_pkl, 'rb')
     tags = pkl.load(f_tags)
 
-    train_list_dir = '/home/nfs/zpy/BrainPedia/cwgan_2_cond_w/for_nn_classify_2.0_100_3w5_11111_1/train_data_list.pkl'
+    train_list_dir = ""
     train_list = pkl.load(open(train_list_dir, 'rb'))
 
     f_tags.close()
@@ -214,7 +214,7 @@ def pre_class_statics(data):
         # normalization
         outbrain = np.array([2 * ((brain - _min) / (_max - _min)) - 1])
 
-        train[tags[img_id]].append(outbrain.reshape([13, 15, 11]))#[13,15,11]))  # 13,15,11,1
+        train[tags[img_id]].append(outbrain.reshape([13, 15, 11])) # 13,15,11 in our case
         count[tags[img_id]] += 1
 
     sum_1 = 0
@@ -230,7 +230,7 @@ def pre_class_statics(data):
 def load_ckpt_data():
 
     print('[INFO] Load Test BrainPedia dataset...')
-    train_file = open('/home/nfs/zpy/BrainPedia/cwgan_2_cond_w/for_nn_classify_2.0_100_3w5_11111_1/true_real.pkl', 'rb')
+    train_file = open("", 'rb')
     train_dic = pkl.load(train_file)
     train_file.close()
     return train_dic
@@ -257,35 +257,11 @@ def pre_class_statics2():
     return original_data
 
 def main(_):
-  '''
-  if FLAGS.original_image is None or FLAGS.compared_image is None:
-    print('\nUsage: python msssim.py --original_image=original.png '
-          '--compared_image=distorted.png\n\n')
-    return
-
-  if not tf.gfile.Exists(FLAGS.original_image):
-    print('\nCannot find --original_image.\n')
-    return
-
-  if not tf.gfile.Exists(FLAGS.compared_image):
-    print('\nCannot find --compared_image.\n')
-    return
-
-  with tf.gfile.FastGFile(FLAGS.original_image) as image_file:
-    img1_str = image_file.read()
-  with tf.gfile.FastGFile(FLAGS.compared_image) as image_file:
-    img2_str = image_file.read()
-   '''
-  '''
-  train = load_ckpt_data()
-  gen_dicF = open('/home/nfs/zpy/BrainPedia/cwgan_2_cond_w/for_nn_classify_2.0_100_3w5_11111_1/gen_dic.pkl', 'rb')
-
-  train = pkl.load(gen_dicF)
-  gen_dicF.close()
-  '''
+ 
   #data = pre_class_statics2()
   train = load_ckpt_data()#load_ckpt_data()#pre_class_statics(None)
-  input_img = tf.compat.v1.placeholder(tf.float32, shape=[26, 31, 23])#[26, 31, 23])#tf.placeholder(tf.string)
+  # To Do: change hard code
+  input_img = tf.compat.v1.placeholder(tf.float32, shape=[26, 31, 23])#[26, 31, 23]) 
   decoded_image = tf.expand_dims(input_img, 0)
 
   print('Start cal')
@@ -312,7 +288,7 @@ def main(_):
           ct+=1
           if(ct == 4950):
               break
-      f =open('./2_real_ms_ssim.pkl','wb')
+      f =open('./real_ms_ssim.pkl','wb')
       pkl.dump(ms_score,f)
       f.close()
       print('Done')
