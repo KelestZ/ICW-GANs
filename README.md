@@ -12,7 +12,7 @@ Peiye Zhuang, Alexander Schwing, and Sanmi Koyejo
 - Tensorflow 1.x
 - Python3
 - NVIDIA GPU + CUDA CuDNN
-- Scipy 1.1.0, Nilearn etc
+- Scipy 1.1.0, Nilearn etc.
 
 ## Data
 
