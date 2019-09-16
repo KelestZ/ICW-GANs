@@ -28,3 +28,16 @@ You may download our pretrained model [checkpoint](https://drive.google.com/open
  python icw_gans.py
 ```
 You may change default parameter settings in the argparse. We did not write an independent python file for testing. Instead, we used the function `save_test_img` in the code to save test images after amount of training epochs.
+
+## Citation
+
+If you use this code for your research, please cite our paper:
+```
+@article{icwgans,
+  title={FMRI data augmentation via synthesis},
+  author={Peiye Zhuang, Alexander Schwing, Sanmi Koyejo},
+  journal={The IEEE International Symposium on Biomedical Imaging (ISBI)},
+  year={2019}
+}
+```
+
