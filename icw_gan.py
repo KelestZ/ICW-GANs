@@ -41,7 +41,7 @@ parser.add_argument("--sample_dir", type=str, default="./samples/", help="sample
 parser.add_argument("--test_dir", type=str, default="./tests/", help="test")
 parser.add_argument("--cost_dir", type=str, default="./costs/", help="cost")
 
-parser.add_argument("--base_dir", type=str, default="/shared/rsaas/zpy/zpy/BrainPedia/pkl/", help="base_dir")
+parser.add_argument("--base_dir", type=str, default="./pkl/", help="base_dir to put training pkl data")
 parser.add_argument("--imageFile", type=str, default="original_dim.pkl", help="imageFile")
 parser.add_argument("--labelFile", type=str, default="multi_class_pic_tags.pkl", help="labelFile")
 
